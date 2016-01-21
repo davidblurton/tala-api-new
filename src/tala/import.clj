@@ -1,6 +1,6 @@
 (ns tala.import
   (:require [clojure.java.io :as io]
-            [tala.records])
+            [tala.records :refer :all])
   (:import  [tala.records Lemma Form])
   (:use [clojure.string :only (split)]))
 
@@ -11,10 +11,15 @@
     (doall
       (line-seq reader))))
 
+(defn parse-line [line]
+  (let [[head-word id word-class section form grammar-tag] (split line separator)]
+    [head-word (Integer. id) word-class section form grammar-tag]))
+
 (defn line->Form [line]
-  (let [[_ _ _ _ form grammar-tag] (split line separator)]
-    (Form. form grammar-tag)))
+  (apply ->Form (drop 4 (parse-line line))))
 
 (defn line->Lemma [line]
-  (let [[head-word id word-class section] (split line separator)]
-    (Lemma. head-word (Integer. id) word-class section [])))
+  (apply ->Lemma (take 4 (parse-line line))))
+
+(defn parse-data [data]
+  (assoc (line->Lemma (first data)) :forms (map line->Form data)))

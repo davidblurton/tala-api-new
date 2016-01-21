@@ -3,8 +3,8 @@
             [tala.import :refer :all])
   (:use [clojure.pprint :only (pprint)]))
 
-(def line "hestur;6179;kk;alm;hestur;NFET")
 (def data (read-csv "resources/sample.csv"))
+(def line (first data))
 
 (describe "Import data from a csv"
   (it "should read 16 records from sample"
@@ -20,5 +20,14 @@
       (should= "hestur" head-word)
       (should= 6179 id)
       (should= "kk" word-class)
-      (should= section "alm"))))
+      (should= section "alm")))
 
+  (it "should map forms from data"
+    (def forms (map line->Form data))
+    (def hesta-forms (filter #(= "hesta" %) (map :form forms)))
+    (should= 2 (count hesta-forms)))
+
+  (it "should map lemmas from data"
+    (let [{:keys [head-word forms]} (parse-data data)]
+      (should= "hestur" head-word)
+      (should= 16 (count forms)))))
