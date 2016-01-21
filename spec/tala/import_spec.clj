@@ -10,6 +10,6 @@
     (should= 16 (count data)))
 
   (it "should create a lemma from sample data"
-    (def hestur-lemma (csv->Lemma data))
-    (should= "hestur" (:head-word hestur-lemma))
-    (should= 6179 (:id hestur-lemma))))
+    (let [{:keys [head-word id]} (csv->Lemma data)]
+      (should= "hestur" head-word)
+      (should= 6179 id))))
