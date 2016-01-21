@@ -11,9 +11,10 @@
     (doall
       (line-seq reader))))
 
-(defn parse-line [line]
-  (let [[head-word id word-class section] (split line separator)]
-    (tala.records/->Lemma head-word (Integer. id) word-class section nil)))
+(defn line->Form [line]
+  (let [[_ _ _ _ form grammar-tag] (split line separator)]
+    (Form. form grammar-tag)))
 
-(defn csv->Lemma [data]
-  (parse-line (first data)))
+(defn line->Lemma [line]
+  (let [[head-word id word-class section] (split line separator)]
+    (Lemma. head-word (Integer. id) word-class section [])))
