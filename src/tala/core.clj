@@ -4,7 +4,8 @@
             [tala.parse-grammar-tags :as parse]
             [ring.middleware.json :as middleware]
             [compojure.route :as route]
-            [compojure.handler :as handler])
+            [compojure.handler :as handler]
+            [ring.middleware.gzip])
   (:use [clojure.pprint :only (pprint)]))
 
 (defn mapTags [form]
@@ -26,4 +27,5 @@
   (-> (handler/api app-routes)
       (middleware/wrap-json-body)
       (middleware/wrap-json-params)
-      (middleware/wrap-json-response)))
+      (middleware/wrap-json-response)
+      (ring.middleware.gzip/wrap-gzip)))
