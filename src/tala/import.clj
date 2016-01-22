@@ -1,7 +1,6 @@
 (ns tala.import
   (:require [clojure.java.io :as io]
             [tala.records :refer :all])
-  (:import  [tala.records Lemma Form])
   (:use [clojure.string :only (split)]))
 
 (def separator #";")

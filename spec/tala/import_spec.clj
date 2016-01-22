@@ -16,7 +16,7 @@
       (should= "NFET" grammar-tag)))
 
   (it "should create a lemma from a line"
-    (let [{:keys [head-word id word-class section forms]} (line->Lemma line)]
+    (let [{:keys [head-word id word-class section]} (line->Lemma line)]
       (should= "hestur" head-word)
       (should= 6179 id)
       (should= "kk" word-class)

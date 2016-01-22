@@ -9,8 +9,8 @@
 
 (defn get-article [tag]
   (if (ends-with? tag "gr")
-    :definite
-    :indefinite))
+      :definite
+      :indefinite))
 
 (defn parse-tag [tag]
   (def in (partial get-matching-keyword tag))
